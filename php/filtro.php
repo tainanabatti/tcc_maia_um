@@ -5,31 +5,99 @@
     <meta charset="UTF-8">
     <title>Login Form</title>
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="../css/bootstrap.css">
+
 
 
 </head>
     <body>
         <?php
+        $CONEXAO = pg_connect($_POST['conn']);
+        $coluna= $_REQUEST['column'];
+        echo "<h1>Particionamento da tabela ". ($_POST['table'])."</h1>";
 
-        $tabela = $_GET['table'];
 
-        $sql = "SELECT column_name FROM information_schema.columns WHERE table_name = '".$tabela."'";
+        $sql = "SELECT data_type FROM information_schema.columns WHERE column_name = '$coluna'  and  table_name = '".$_REQUEST['table']."'";
 
-        $resultado = pg_query($conexao, $sql);
+        $resultado = pg_query($CONEXAO, $sql);
 
         $column =pg_fetch_all($resultado);
-        echo '<h1>'.$db.'</h1>';
-        foreach ($column as $key){
-            foreach ($key as $k){
 
-                echo '<form action="./php/filtro.php" method="get">';
-                echo '<a href="filtro.php?column='.$k.'"  name="'.$k.'"  value="'.$k.'">'.$k.'</link><br>' ;
-                echo '</form>';
-            }
+        foreach ($column as $key){
+
+           $tipo =  $key['data_type'];
+
         }
+
+
+
+        if($tipo == 'date'){
+
+
+            ?>
+            <form action="core.php" method="post">
+                <div class="form-row">
+                    <div class="col">
+                        <div class="form-control" >
+                            <h3> Intervalo de particionamento </h3>
+                            <input type="radio"  name="ss"  value="mensal" >
+                            <label for="mensal">Mensal</label><br>
+                            <input type="radio"  name="ss"  value="bime" >
+                            <label for="bime">Bimestral</label><br>
+                            <input type="radio"  name="ss"  value="seme" >
+                            <label for="seme">Semestral</label><br>
+                            <input type="radio"  name="ss"  value="anual" checked="checked"  >
+                            <label for="anual">Anual</label><br>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-control">
+                            <label >As tabelas derivadas do particionamento ficaram com a seguinte  sintaxe</label><br>
+                            <label > <?php echo $_POST['table'].'_teste' ?></label><br>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block btn-large">Conectar</button>
+                </div>
+            </form>
+
+
+            <?php
+        }
+        else{
+            ?>
+            <form action="core.php" method="post">
+                <div class="form-row">
+                    <div class="col">
+                        <div class="form-control">
+                            <h3> Intervalo de particionamento </h3>
+                            <input type="radio"  name="ss"  value="meio" >
+                            <label for="meio">500.000</label><br>
+                            <input type="radio"  name="ss"  value="milhao" checked="checked"  >
+                            <label for="milhao">1.000.000</label><br>
+
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-control" >
+                            <label >As tabelas derivadas do particionamento ficaram com a seguinte  sintaxe</label><br>
+                            <label > <?php echo $_POST['table'].'_teste' ?></label><br>
+
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block btn-large">Conectar</button>
+                </div>
+            </form>
+
+            <?php
+        }
+
+
         ?>
+
+
+
     </body>
 
 </html>
