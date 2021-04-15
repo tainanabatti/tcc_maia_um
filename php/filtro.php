@@ -6,7 +6,7 @@
     <title>Login Form</title>
 
 
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/bootstrap.css">
 
 
@@ -16,7 +16,7 @@
         <?php
         $CONEXAO = pg_connect($_POST['conn']);
         $coluna= $_REQUEST['column'];
-        echo "<h1>Particionamento da tabela ". ($_POST['table'])."</h1>";
+        echo "<h1 style='color: #ffffff'>Particionamento da tabela ". ($_POST['table'])."</h1>";
 
 
         $sql = "SELECT data_type FROM information_schema.columns WHERE column_name = '$coluna'  and  table_name = '".$_REQUEST['table']."'";
@@ -37,18 +37,18 @@
 
 
             ?>
-            <form action="core.php" method="post">
+            <form action="core.php" method="post" class="login2">
                 <div class="form-row">
                     <div class="col">
                         <div class="form-control" >
-                            <h3> Intervalo de particionamento </h3>
-                            <input type="radio"  name="ss"  value="mensal" >
+                            <h3 " > Intervalo de particionamento </h3>
+                            <input type="radio"  name="grao"  value="mensal" >
                             <label for="mensal">Mensal</label><br>
-                            <input type="radio"  name="ss"  value="bime" >
-                            <label for="bime">Bimestral</label><br>
-                            <input type="radio"  name="ss"  value="seme" >
+                            <input type="radio"  name="grao"  value="bime" >
+                            <label for="bime">Bimestral</label><br>cy
+                            <input type="radio"  name="grao"  value="seme" class="form-row">
                             <label for="seme">Semestral</label><br>
-                            <input type="radio"  name="ss"  value="anual" checked="checked"  >
+                            <input type="radio"  name="grao"  value="anual" checked="checked"  >
                             <label for="anual">Anual</label><br>
                         </div>
                     </div>
@@ -58,8 +58,16 @@
                             <label > <?php echo $_POST['table'].'_teste' ?></label><br>
                         </div>
                     </div>
+                    </br>
                     <button type="submit" class="btn btn-primary btn-block btn-large">Conectar</button>
                 </div>
+
+                <?php
+                echo '<input type="checkbox" hidden name="conn"  value="'.$_POST['conn'].'" checked></link><br>' ;
+                echo '<input type="checkbox" hidden name="table"  value="'.$_REQUEST['table'].'" checked></link><br>' ;
+                echo '<input type="checkbox" hidden name="column"  value="'.$_REQUEST['column'].'" checked></link><br>' ;
+
+                ?>
             </form>
 
 
@@ -67,14 +75,14 @@
         }
         else{
             ?>
-            <form action="core.php" method="post">
+            <form action="core.php" method="post" class="login>
                 <div class="form-row">
                     <div class="col">
                         <div class="form-control">
                             <h3> Intervalo de particionamento </h3>
-                            <input type="radio"  name="ss"  value="meio" >
+                            <input type="radio"  name="grao"  value="meio" >
                             <label for="meio">500.000</label><br>
-                            <input type="radio"  name="ss"  value="milhao" checked="checked"  >
+                            <input type="radio"  name="grao"  value="milhao" checked="checked"  >
                             <label for="milhao">1.000.000</label><br>
 
                         </div>
@@ -88,11 +96,17 @@
                     </div>
                     <button type="submit" class="btn btn-primary btn-block btn-large">Conectar</button>
                 </div>
+
+        <?php
+        echo '<input type="checkbox" hidden name="conn"  value="'.$_POST['conn'].'" checked></link><br>' ;
+        echo '<input type="checkbox" hidden name="table"  value="'.$_REQUEST['table'].'" checked></link><br>' ;
+        echo '<input type="checkbox" hidden name="column"  value="'.$_REQUEST['column'].'" checked></link><br>' ;
+
+        ?>
             </form>
 
-            <?php
+        <?php
         }
-
 
         ?>
 

@@ -11,16 +11,11 @@
 
     </head>
     <body>
-    <form action="filtro.php" method="post">
+    <form action="filtro.php" method="post" class="login">
         <?php
-
         $conexao = pg_connect($_POST['conn']);
 
-
         $sql = "SELECT column_name, data_type FROM information_schema.columns WHERE (data_type = 'integer' or data_type = 'date') and  table_name = '".$_REQUEST['table']."'";
-
-
-
 
         $resultado = pg_query($conexao, $sql);
 
@@ -37,7 +32,7 @@
 
                 $i = 0;
                 echo '<tr>';
-                echo '<th><button  name="column" value="'.$key['column_name'].'" class="" >'.$key['column_name'].'</button></th>';
+                echo '<th><button  name="column" value="'.$key['column_name'].'" class="btn btn-primary btn-block" >'.$key['column_name'].'</button></th>';
                 echo '<th>'.$key['data_type'].'</th>';
                 echo '</tr>';
                 $i++;
